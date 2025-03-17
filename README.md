@@ -1,6 +1,5 @@
 # An old project I made to visualize Lagrange interpolation
 
-**WARNING: WILL BREAK TERMINALS WHICH DO NOT SUPPORT COMPLEX TEXT LAYOUT __(MOST OF THEM)__**
 I really don't know why some comments are in _Hindi_, but I will be preserving this for
 the sake of history :p
 
