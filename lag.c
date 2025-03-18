@@ -13,14 +13,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define DEBUG 1
-#define perr(args...)                                                          \
-  if (DEBUG)                                                                   \
-  fprintf(stderr, args)
+#ifdef DEBUG
+#define perr(args...) fprintf(stderr, args)
+#else
+#define perr(args...)
+#endif
+
 // n integer का जोड़
 #define sum_n(n) ((((n) * (n)) + (n)) / 2)
 
 int ndigit(int num) {
+  num = abs(num);
   int count = 0;
   if (num < 0)
     count++;
@@ -30,6 +33,7 @@ int ndigit(int num) {
   }
   return count;
 }
+
 int maxof(int n, int *y) {
   int max = 0;
   int a;
@@ -40,6 +44,7 @@ int maxof(int n, int *y) {
   }
   return max + 2;
 }
+
 void fillfd(int n, int *y) {
   int max = sum_n(n);
   int cur = n;
@@ -47,12 +52,12 @@ void fillfd(int n, int *y) {
   n--;
   while (cur < max) {
     for (int i = 0; i < n; i++) {
-      printf("%d, y[%d] = y[%d] - y[%d]\n", i, cur + i, prev + i + 1, prev + i);
-      printf("%d = %d - %d\n", y[cur + i], y[prev + i + 1], y[prev + i]);
+      perr("%d, y[%d] = y[%d] - y[%d]\n", i, cur + i, prev + i + 1, prev + i);
+      perr("%d = %d - %d\n", y[cur + i], y[prev + i + 1], y[prev + i]);
       y[cur + i] = y[prev + i + 1] - y[prev + i];
     }
     prev = cur;
-    printf("%d %d %d\n", n, prev, cur);
+    perr("%d %d %d\n", n, prev, cur);
     cur += n;
     n--;
   }
@@ -71,7 +76,6 @@ void printfdtable(int a, int h, int n, int *y) {
   // Column Header
 
   printf("|%*cx |%*cy |", width - 1, ' ', width - 1, ' ');
-  ;
   for (int i = 1; i < n; i++)
     printf("%*cfd%*d |", width - 4, ' ', 2, i);
   puts("");
@@ -91,8 +95,7 @@ void printfdtable(int a, int h, int n, int *y) {
       printf("%*c |", width, ' ');
     puts("");
 
-    max = i + cur - n +
-          sub; // previous value of i + cur before final loop iteration
+    max = i + cur - n + sub; // previous value of i + cur before final loop iteration
   }
 }
 
@@ -132,9 +135,11 @@ int main(int argc, char **argv) {
 
   fillfd(num, y);
 
+  #ifdef DEBUG
   for (int i = 0; i < sum_n(num); i++) {
     perr("y[%d] = %d\n", i, y[i]);
   }
+  #endif
 
   printfdtable(a, h, num, y);
   return 0;
