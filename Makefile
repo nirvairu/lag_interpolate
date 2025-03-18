@@ -1,7 +1,8 @@
 CFLAGS = -Wall -Wextra -O2
 
-lagrange_interpolate:
-	cc $(CFLAGS) lag.c lagrange_interpolate
+SRC = lag.c
+lag_interpolate:
+	cc $(CFLAGS) $(SRC) -o lag_interpolate
 
 clean:
-	rm -f lagrange_interpolate
+	rm -f lag_interpolate
